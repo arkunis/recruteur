@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello MainController!
+{% endblock %}
+
+{% block body %}
+
+	<main class="grid grid-cols-2 w-full mt-10">
+		{% for annonce in annonces %}
+			<div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+				<div class="md:flex">
+					<div class="md:shrink-0">
+						<img class="h-48 w-full object-cover md:h-full md:w-48" src="{{ annonce.img ? asset('img/' ~ annonce.img) : 'https://loremflickr.com/g/320/240/team' }}">
+					</div>
+					<div class="p-8">
+						<div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{{ annonce.title }}</div>
+						<a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">
+							{{ annonce.datePublish|date('d-m-Y h:i:s') }}
+						</a>
+						<p class="mt-2 text-slate-500">{{ annonce.description }}
+						</p>
+						{% if app.user %}
+							{% if annonce.user.id == app.user.id %}
+								<a href="{{ path('app_annonces_modify', {id: annonce.id}) }}" class="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">Modifier</a>
+								<a href="{{ path('app_annonces_supp', {id: annonce.id}) }}" class="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">Supprimer</a>
+							{% endif %}
+							<a href="{{ path('app_postule', {id: annonce.id}) }}" class="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition ease-in-out duration-150">Postuler</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</main>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProfilController!
+{% endblock %}
+
+{% block body %}
+	{% for postule in app.user.gPostules %}
+
+		{{ dump(postule) }}
+
+	{% endfor %}
+
+    <a href="{{ asset("pdf/sf.pdf") }}" download>télécharger</a>
+{% endblock %}
